@@ -54,7 +54,7 @@ export class SourceStore {
     this._sourceId = config.sourceId;
     this._prefix = config.url_prefix;
     this._lang = config.lang;
-    this._en = config.env;
+    this._env = config.env;
     this._quoteManagerId = config.quoteManagerId;
     this._quoteManagerName = config.quoteManagerName;
     this._configUrl = config.configUrl;

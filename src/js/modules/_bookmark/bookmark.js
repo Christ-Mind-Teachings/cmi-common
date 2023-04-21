@@ -1,6 +1,6 @@
 import notify from "toastr";
 
-import {getAnnotations} from "../_ajax/annotation"; 
+import {getAnnotations} from "../_ajax/annotation";
 import {putTopicList} from "../_ajax/topics";
 import {getUserInfo} from "../_user/netlify";
 import {storeGet, storeSet} from "../_util/store"
@@ -52,7 +52,7 @@ function getCount(pid) {
 }
 
 function loadSelectedTextBookmark(bm, sharePid) {
-  $(`#p${bm.pid} > span.pnum`).addClass("has-bookmark"); 
+  $(`#p${bm.pid} > span.pnum`).addClass("has-bookmark");
   markSelection(bm.annotation.selectedText, getCount(bm.pid), sharePid);
   addTopicsAsClasses(bm.annotation);
   setQuickLinks(bm.annotation, "highlight");
@@ -69,7 +69,7 @@ function loadBookmark(bm, sharePid) {
 }
 
 function createSelectedTextBookmark(bm, count) {
-  $(`#p${bm.pid} > span.pnum`).addClass("has-bookmark"); 
+  $(`#p${bm.pid} > span.pnum`).addClass("has-bookmark");
   markSelection(bm.annotation.selectedText, count);
   addTopicsAsClasses(bm.annotation);
   setQuickLinks(bm.annotation, "highlight");
@@ -289,7 +289,7 @@ function initBmLinkHandler() {
       //aid = parseInt($(this).prev("mark").attr("data-annotation-id"), 10);
       aid = $(this).prev("mark").attr("data-annotation-id");
     }
-    
+
     //bookmark wont be found if it is still being created
     let bkmrk = localStore.getItem(pid, aid);
 
@@ -364,6 +364,9 @@ function createAnnotation(formValues) {
   // add summary from any topic into the annotation
   if (annotation.status === "update") {
     let bkmrk = localStore.getItem(annotation.rangeStart, annotation.aid);
+    if (!bkmrk.annotation.topicList) {
+      bkmrk.annotation.topicList = [];
+    }
     bkmrk.annotation.topicList.forEach(i => {
       if (i.summary) {
         let topic = annotation.topicList.find(t => t.value === i.value);
@@ -521,6 +524,7 @@ function bookmarkFeatureHandler() {
       el.removeClass("disable-selection user");
       $(".toggle-bookmark-selection").text(value);
       $("#bookmark-dropdown-menu > span  i.bookmark-corner-icon").addClass("hide");
+      storeSet("bmCreation", "enabled");
       if (showMessage) {
         notify.success("Bookmark Creation Enabled");
       }
@@ -583,7 +587,7 @@ async function getPageBookmarks(sharePid) {
   }
   catch(err) {
     console.error(err);
-    //Notify error 
+    //Notify error
   }
 }
 

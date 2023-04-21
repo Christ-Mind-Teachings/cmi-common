@@ -335,13 +335,16 @@ export class BookmarkLocalStore {
           this._incrementTopic(topic);
         });
 
-        //delete topics if any have been deleted
+        //look for topics deleted from the annotation
         deletedTopics.forEach((i) => {
           //find topic in old annotation
           let topic = this.list[index].annotation.topicList.find((t) => {
             return t.value === i;
           });
-          this._decrementTopic(topic);    
+
+          if (topic) {
+            this._decrementTopic(topic);
+          }
         });
       }
 

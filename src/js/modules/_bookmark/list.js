@@ -165,17 +165,17 @@ function generateBookmarkList(books) {
     return __lang`
       <h2 class="ui center aligned icon header">
         <i class="circular bookmark icon"></i>
-        ${"bmlist:header"}
+        ${"bmlist:header:You Don't Have Any Bookmarks Yet"}
       </h2>
       <p>
-        ${"bmlist:intro"}
+        ${"bmlist:intro:Bookmarks are expressive and powerful and you can assign them to categories to easily view only the categories you want. There are two ways to create bookmarks."}
       </p>
       <ul>
-        <li>${"bmlist:item1"}</li>
-        <li>${"bmlist:item2"}</li>
+        <li>${"bmlist:item1:Selecting text of interest or"}</li>
+        <li>${"bmlist:item2:Clicking on the paragraph number, eg (p21)"}</li>
       </ul>
       <p>
-        ${"bmlist:link"}
+        ${"bmlist:link:See <a href='/acq/bookmark/'>the Bookmark documentation</a> for more information."}
       </p>
     `;
   }
@@ -302,7 +302,7 @@ function restoreModalState() {
   let {modal} = storeGet("bmModal", {modal: {filter: false}}); //bookmarkModalState("get");
   let form = $("#bookmark-filter-form");
 
-  console.log("modal: ", modal);
+  // console.log("modal: ", modal);
 
   if (modal.filter) {
     form.form("set value", "topicList", modal.topics);

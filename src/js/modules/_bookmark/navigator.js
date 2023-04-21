@@ -129,10 +129,10 @@ function getBookmarkUrl(bookmarks, pageKey, pid, topic) {
   else {
     //we have a bookmark with no selected text, have to get the url in another way
     if (topic.length > 0) {
-      url = `${g_sourceInfo.env === "integration"?g_sourceInfo.url_prefix:""}${g_sourceInfo.keyInfo.getUrl(pageKey)}?tnav=${bookmark[0].rangeStart}&topic=${topic}`;
+      url = `${g_sourceInfo.prefix}${g_sourceInfo.keyInfo.getUrl(pageKey)}?tnav=${bookmark[0].rangeStart}&topic=${topic}`;
     }
     else {
-      url = `${g_sourceInfo.env === "integration"?g_sourceInfo.url_prefix:""}${g_sourceInfo.keyInfo.getUrl(pageKey)}?bkmk=${bookmark[0].rangeStart}`;
+      url = `${g_sourceInfo.prefix}${g_sourceInfo.keyInfo.getUrl(pageKey)}?bkmk=${bookmark[0].rangeStart}`;
     }
   }
 

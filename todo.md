@@ -9,3 +9,6 @@
 * add user upload of lesson or chapter notes that includes markdown and
   images
 * add daily quote email users can subscribe to
+* Check webpack module output against layout files
+* Upgrade Webpack
+
