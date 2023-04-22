@@ -4,7 +4,7 @@
   "description": "Holds common files used by the different sources in the Library of Christ Mind Teachings",
   "main": "index.js",
   "author": "R Mercer",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {},
   "dependencies": {
     "clipboard": "^2.0.6",

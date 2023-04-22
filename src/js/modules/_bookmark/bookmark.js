@@ -3,6 +3,7 @@ import notify from "toastr";
 import {getAnnotations} from "../_ajax/annotation";
 import {putTopicList} from "../_ajax/topics";
 import {getUserInfo} from "../_user/netlify";
+import {getUrlByPageKey} from "../_user/cmi";
 import {storeGet, storeSet} from "../_util/store"
 import {BookmarkLocalStore} from "./localStore";
 import {purify} from "../_util/sanitize";
@@ -715,7 +716,7 @@ export const annotation = {
 
 function getLinkHref(link) {
   //let url = getUrlByPageKey(link.key);
-  let url = g_sourceInfo.keyInfo.getUrlByPageKey(link.key);
+  let url = getUrlByPageKey(link.key);
 
   if (location.pathname === url) {
     return `#${link.desc.pid}`;
