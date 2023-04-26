@@ -1,8 +1,13 @@
 /*
   facebook sdk support
 */
+
+let init = false;
+
 export default {
+
   initialize: () => {
+    if (init) return;
     $.ajax({
       url: "//connect.facebook.net/en_US/sdk.js",
       dataType: "script",
@@ -13,6 +18,7 @@ export default {
           xfbml      : true,
           version    : "v3.1"
         });
+        init = true;
       }
     });
   }

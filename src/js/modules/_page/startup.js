@@ -1,15 +1,55 @@
 import {TweenMax} from "gsap";
-import {storeGet, storeSet} from "../_util/store";
 
-let storeKey;
+import {pageHelpInit, transcriptHelpInit} from "./help";
+import auth from "../_user/netlify";
+import fb from "../_util/facebook";
 
-export function initTopicPage() {
+import bookmark from "../_bookmark/bookmark";
+import {initShareByEmail} from "../_bookmark/shareByEmail";
+import share from "../_share/share";
+
+//let storeKey;
+let g_sourceInfo;
+
+/*
+ * Init page with no bookmark, FB and help support.
+ */
+export function initBareBonesHomePage(si) {
+  auth.initialize();
+  initStickyMenu();
+  initAnimation("[animate]");
+}
+
+export function initHomePage(si, tour) {
+  auth.initialize();
+  initStickyMenu();
+  initAnimation("[animate]");
+  pageHelpInit(si, tour);
+
+  //used when sharing quotes or bookmarks
+  fb.initialize();
+
+  homePageBookmarkInit(si);
+}
+
+//Init page with no search, bookmark, FB or help support
+export function initBareBonesTranscriptPage(si) {
+  g_sourceInfo = si;
+  auth.initialize();
+
+  //test if browser is mobile based on the css media query
+  const isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
+
+  if (isMobile) {
+    initMobileSpecifics();
+  }
+
   initStickyMenu();
 }
 
-export function initTranscriptPage(key) {
-  //local storage key to save paragraph number display state
-  storeKey = key;
+export function initTranscriptPage(si) {
+  g_sourceInfo = si;
+  auth.initialize();
 
   //test if browser is mobile based on the css media query
   const isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
@@ -22,6 +62,27 @@ export function initTranscriptPage(key) {
   labelParagraphs();
   setParagraphNumberDisplayState();
   createParagraphNumberToggleListener();
+
+  transcriptHelpInit(si);
+
+  //used when sharing quotes or bookmarks
+  fb.initialize();
+
+  transcriptPageBookmarkInit(si);
+}
+
+function transcriptPageBookmarkInit(si) {
+
+  share.initialize(si).then((pid) => {
+    bookmark.initialize(pid, si);
+  });
+
+  initShareByEmail(si);
+}
+
+function homePageBookmarkInit(si) {
+  bookmark.initialize(null, si);
+  initShareByEmail(si);
 }
 
 function initMobileSpecifics() {
@@ -84,12 +145,14 @@ function createParagraphNumberToggleListener() {
     let el = $(".transcript.ui.text.container");
     if (el.hasClass("hide-pnum")) {
       el.removeClass("hide-pnum");
-      storeSet(storeKey, "on");
+      g_sourceInfo.setValue("pnDisplay", "on");
+      //storeSet(storeKey, "on");
       setParagraphNumberDisplay("on");
     }
     else {
       el.addClass("hide-pnum");
-      storeSet(storeKey, "off");
+      g_sourceInfo.setValue("pnDisplay", "off");
+      //storeSet(storeKey, "off");
       setParagraphNumberDisplay("off");
     }
   });
@@ -107,7 +170,8 @@ function setParagraphNumberDisplay(state) {
 function setParagraphNumberDisplayState() {
   let toggleAvailable = $(".toggle-paragraph-markers").length === 0 ? false: true;
 
-  let state = storeGet(storeKey);
+  //let state = storeGet(storeKey);
+  let state = g_sourceInfo.getValue("pnDisplay");
   let el = $(".transcript.ui.text.container");
   let current = el.hasClass("hide-pnum") ? "off": "on";
 
@@ -120,7 +184,8 @@ function setParagraphNumberDisplayState() {
   //if not set use current value
   if (!state) {
     state = current;
-    storeSet(storeKey, state);
+    //storeSet(storeKey, state);
+    g_sourceInfo.setValue("pnDisplay", state);
   }
 
   if (state !== current) {

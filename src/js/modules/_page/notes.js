@@ -48,12 +48,12 @@ export function initialize(info = {}) {
     }
 
     if (!notes[noteName].contents) {
-      //console.log("requesting note: %s", noteName);
+      //console.log("notes: requesting note: %o", notes[noteName]);
       axios({
         method: "get",
         url: notes[noteName].url,
         responseType: "text"
-      }).then(response => {
+      }).then((response) => {
         //console.log("Note response: %s", response.data);
         notes[noteName].content = response.data;
         showNote(noteName);

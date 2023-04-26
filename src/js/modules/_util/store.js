@@ -96,16 +96,6 @@ export class SourceStore {
     return storeKey;
   }
 
-  /*
-  set gs(func) {
-    this._gs = func;
-  }
-
-  gs(key, def) {
-    return this._gs(key, def);
-  }
-  */
-
   //check for timer reservation for url
   getReservation(url) {
     return this._getReservation(url);

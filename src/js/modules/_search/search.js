@@ -8,6 +8,7 @@ import {getUserInfo} from "../_user/netlify";
 import { initShow, showSavedQuery, showSearchResults } from "./show";
 import {showSearchMatch} from "../_util/url";
 import { initNavigator } from "./navigator";
+import { formatInit } from "./format";
 import {gs} from "../_language/lang";
 
 //search modal
@@ -578,6 +579,7 @@ export default {
     g_userInfo = getUserInfo();
     g_sourceInfo = si;
 
+    formatInit(si);
     initShow(si);
 
     if ($(".transcript").length) {

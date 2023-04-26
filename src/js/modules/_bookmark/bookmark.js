@@ -747,8 +747,8 @@ export default {
     //provide teaching constants to bmnet
     netInit(si);
 
+    //this is a transcript page
     if ($(".transcript").length) {
-      //this is a transcript page
       initTranscriptPage(pid, si);
     }
 
