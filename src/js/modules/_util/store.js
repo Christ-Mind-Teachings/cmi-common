@@ -65,6 +65,11 @@ export class SourceStore {
     this._keyInfo = config.keyInfo;
     this._getPageInfo = config.getPageInfo;
 
+    //extensions
+    if (config.extension) {
+      this._helpExtension = config.extension.help;
+    }
+
     //audio support
     this._getReservation = function(url) {return "";};
     this._getAudioInfo = function(url) {return {};};
@@ -143,6 +148,10 @@ export class SourceStore {
 
   get getPageInfo() {
     return this._getPageInfo;
+  }
+
+  get helpExtension() {
+    return this._helpExtension;
   }
 
   get prefix() {

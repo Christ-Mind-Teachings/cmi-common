@@ -39,10 +39,13 @@ export function initBareBonesTranscriptPage(si) {
 
   //test if browser is mobile based on the css media query
   const isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
+  selectTranscriptMenu(isMobile);
 
+  /*
   if (isMobile) {
     initMobileSpecifics();
   }
+ */
 
   initStickyMenu();
 }
@@ -53,10 +56,13 @@ export function initTranscriptPage(si) {
 
   //test if browser is mobile based on the css media query
   const isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
+  selectTranscriptMenu(isMobile);
 
+  /*
   if (isMobile) {
     initMobileSpecifics();
   }
+ */
 
   initStickyMenu();
   labelParagraphs();
@@ -85,8 +91,14 @@ function homePageBookmarkInit(si) {
   initShareByEmail(si);
 }
 
-function initMobileSpecifics() {
-  $("#transcript-menu-large").remove();
+//function initMobileSpecifics() {
+function selectTranscriptMenu(mobile) {
+  if (mobile) {
+    $("#transcript-menu-large").remove();
+  }
+  else {
+    $("#transcript-menu-mobile").remove();
+  }
 }
 
 /*
@@ -227,7 +239,7 @@ export function initStickyMenu() {
 
   // show dropdown on hover
   $(".main.menu  .ui.dropdown").dropdown({
-    on: "hover"
+    on: "click"
   });
 
   // show dropdown on click on mobile

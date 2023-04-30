@@ -17,39 +17,50 @@ function createClickHandlers(si, pageTour) {
     //this is a source specific tour of the home page
     if ($(this).hasClass("page-tour")) {
       pageTour();
+      return;
     }
 
     //a generic tour of the home page, uses source title
     //for context
     if ($(this).hasClass("page-navtour")) {
       pageNavigationDriver(si.title);
+      return;
     }
 
     //a generic tour of a transcript page, uses source title
     //for context
     if ($(this).hasClass("transcript-tour")) {
       transcriptDriver(si.title);
+      return;
     }
 
     //displays the about page
     //-- not used currently
     if ($(this).hasClass("about-src")) {
       location.href = "/about/";
+      return;
     }
 
     //navigates to the CMI quick documentation page
     if ($(this).hasClass("read-documentation")) {
       location.href = "/acq/quick/";
+      return;
     }
 
     //navigates to the CMI video documentation page
     if ($(this).hasClass("view-documentation")) {
       location.href = "/acq/video/";
+      return;
     }
 
     //displays the CMI contact page
     if ($(this).hasClass("contact-me")) {
       location.href = "/acq/contact/";
+      return;
+    }
+
+    if (si.helpExtension) {
+      si.helpExtension(this);
     }
   });
 
@@ -57,11 +68,14 @@ function createClickHandlers(si, pageTour) {
   $(".login-menu-option-account").on("click", "div.item", function(e) {
     if ($(this).hasClass("profile-management")) {
       location.href = "/profile/email/";
+      return;
     }
 
     if ($(this).hasClass("topic-management")) {
       location.href = "/profile/topicMgt/";
+      return;
     }
+
   });
 
   //enables quickly jumping to the home page of other sources
