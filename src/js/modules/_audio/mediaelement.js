@@ -154,7 +154,7 @@ function setEventListeners(player, userStatus, haveTimingData, si) {
 				},
 
 */
-function getUserStatus(si) {
+function getUserStatus(reservation) {
   let user = getUserInfo();
 
   if (!user) {
@@ -181,7 +181,8 @@ function getUserStatus(si) {
   }
 
   //User is a timer, check there is a timing reservation on the page
-  let reservation = si.getReservation(location.pathname);
+  //TODO don't need call to getReservation() after config.js changes
+  //let reservation = si.getReservation(location.pathname);
 
   //all timers must have a reservation
   if (!reservation) {
@@ -201,9 +202,9 @@ function getUserStatus(si) {
 /*
   Determine audio player controls to use, we enable timing if timing data exists or not.
 */
-function assignPlayerFeatures(timingData, si) {
+function assignPlayerFeatures(timingData, reservation) {
   let info = {
-    status: getUserStatus(si),
+    status: getUserStatus(reservation),
     features: []
   };
 
@@ -238,16 +239,16 @@ export default {
    *  src: url of audio file
    *  timingData: uri of timing data, pass it to focus.js
    */
-  initialize: function(src, timingData, si) {
+  initialize: function(src, timingData, reservation, si) {
     //add source of audio file to player
     $("audio.mejs-player").attr("src", src);
 
-    const {status, features} = assignPlayerFeatures(timingData, si);
+    const {status, features} = assignPlayerFeatures(timingData, reservation);
 
     $("#cmi-audio-player").mediaelementplayer({
       pluginPath: "/public/vendor/audio/plugin/",
       iconSprite: '/public/vendor/audio/js/mejs-controls.svg',
-      shimScritAccess: "always",
+      shimScriptAccess: "always",
       skipBackInterval: 15,
       jumpForwardInterval: 15,
       timeFormat: "h:mm:ss",

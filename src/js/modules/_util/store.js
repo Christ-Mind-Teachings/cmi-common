@@ -64,10 +64,12 @@ export class SourceStore {
     this._generateHTML;
     this._keyInfo = config.keyInfo;
     this._getPageInfo = config.getPageInfo;
+    this._getConfig = config.getConfig;
 
     //extensions
     if (config.extension) {
       this._helpExtension = config.extension.help;
+      this._tocExtension = config.extension.toc;
     }
 
     //audio support
@@ -146,8 +148,16 @@ export class SourceStore {
     return this._keyInfo;
   }
 
+  get getConfig() {
+    return this._getConfig;
+  }
+
   get getPageInfo() {
     return this._getPageInfo;
+  }
+
+  get tocExtension() {
+    return this._tocExtension;
   }
 
   get helpExtension() {

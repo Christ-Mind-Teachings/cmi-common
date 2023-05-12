@@ -38,19 +38,24 @@ function createAudioPlayerToggleListener() {
 export default {
 
   //setup page to play audio if audio available
-  initialize: function(si) {
-    let info = si.getAudioInfo(location.pathname);
+  initialize: async function(si) {
+    try {
+      let info = await si.getPageInfo(location.pathname);
 
-    //add audio url to audio player toggle
-    if (info.audio) {
-      setAudioPlayerSource(`${info.audioBase}${info.audio}`);
-      showAudioPlayerMenuOption(info.timing);
+      //add audio url to audio player toggle
+      if (info.audio) {
+        setAudioPlayerSource(`${info.audioBase}${info.audio}`);
+        showAudioPlayerMenuOption(info.timing);
 
-      //setup listener for audio-player-toggle
-      createAudioPlayerToggleListener();
+        //setup listener for audio-player-toggle
+        createAudioPlayerToggleListener();
 
-      //initialize audio player
-      player.initialize(`${info.audioBase}${info.audio}`, info.timing, si);
+        //initialize audio player
+        player.initialize(`${info.audioBase}${info.audio}`, info.timing, info.reservation, si);
+      }
+    }
+    catch(err) {
+      console.error("getPageInfo() failed: %o", err);
     }
   }
 };

@@ -1,0 +1,38 @@
+{
+  "name": "cmi-[source name]",
+  "version": "0.1.0",
+  "description": "Teachings of Christ Mind: [Source Description]",
+  "scripts": {
+    "updateStatus": "../cmi-common/bin/updateStatus",
+    "setConfiguration": "../cmi-common/bin/setConfiguration",
+    "base:dev:webpack": "webpack --mode development",
+    "base:dev:jekyll": "JEKYLL_ENV=development bundle exec jekyll build --config ./_config.prod.yml",
+    "base:prod:webpack": "webpack --mode production",
+    "base:prod:jekyll": "JEKYLL_ENV=production bundle exec jekyll build --config ./_config.prod.yml",
+    "watch": "webpack --mode development --watch",
+    "jekyll": "JEKYLL_ENV=development bundle exec jekyll s",
+    "start": "npm run jekyll & npm run watch"
+  },
+  "keywords": [
+    "cmi"
+  ],
+  "author": "Author Name",
+  "homepage": "https://www.christmind.info/",
+  "repository": "repository url",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^4.1.2",
+    "css-loader": "^2.1.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^3.0.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.42.1",
+    "webpack-bundle-analyzer": "^3.8.0",
+    "webpack-cli": "^3.3.11"
+  }
+}

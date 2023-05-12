@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+
+/*
+ * Update status.js in src/js/modules/_config/ by reading
+ * project.json.
+ *
+ * Project.json lists the names of json files to read for
+ * the update.
+ *
+ * Run this program every time there is a new json file or
+ * a change to an existing json file.
+ *
+ * $ npm run updateConfigStatus
+ */
+
+const fs = require('fs');
+const { exec } = require("child_process");
+
+const args = process.argv.slice(2);
+const outputFile = "src/js/modules/_config/status.js";
+
+let inPath = "public/config";
+
+//This file specifies which config files to read
+let project = `${inPath}/project.json`;
+
+/*
+ * Read configuration json files
+ */
+function readFile(fn) {
+  try {
+    let config = fs.readFileSync(fn, 'utf8');
+    return JSON.parse(config);
+  }
+  catch(e) {
+    console.error("Can't read file: %s", fn);
+    process.exit(1);
+  }
+}
+
+function runCmd(cmd) {
+  return new Promise((resolve, reject) => {
+    exec(cmd, (error, stdout, stderr) => {
+        if (error) {
+            reject(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            resolve(`stderr: ${stderr}`);
+            return;
+        }
+        resolve(`${stdout}`);
+    });
+  });
+}
+
+let projectInfo = readFile(project);
+
+let datePromises = projectInfo.books.map(book => {
+  return runCmd(`date -r ${inPath}/${book}.json`);
+});
+
+Promise.all(datePromises)
+  .then((values) => {
+    const output = fs.createWriteStream(`${outputFile}`);
+    output.write("export const status = {\n");
+    projectInfo.books.forEach((ele, idx) => {
+      if (idx === values.length - 1) {
+        output.write(`  ${ele}: "${values[idx].substring(0, values[idx].length - 1)}"\n`);
+      }
+      else {
+        output.write(`  ${ele}: "${values[idx].substring(0, values[idx].length - 1)}",\n`);
+      }
+    });
+    output.write("};\n");
+    output.end();
+    console.log("Success!");
+  })
+  .catch((error) => {
+    console.error(error);
+    console.log("Failed.");
+  });
+
