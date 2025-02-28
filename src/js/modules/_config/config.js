@@ -135,9 +135,18 @@ export async function getPageInfo(page, data = false) {
       let subunit = config.contents[decodedKey.uid - 1].contents[decodedKey.xid - 1];
 
       pageInfo = config.contents[decodedKey.uid - 1];
-      delete pageInfo.contents;
+      //delete pageInfo.contents;
 
-      pageInfo.url = `${pageInfo.url}/${subunit.url}`;
+      if (!pageInfo.url.endsWith("/")) {
+        pageInfo.url = `${pageInfo.url}/${subunit.url}`;
+      }
+      else {
+        pageInfo.url = `${pageInfo.url}${subunit.url}`;
+      }
+
+      if (!pageInfo.url.endsWith("/")) {
+        pageInfo.url = `${pageInfo.url}/`;
+      }
 
       let keys = Object.keys(subunit);
       keys.forEach(k => {
@@ -158,7 +167,10 @@ export async function getPageInfo(page, data = false) {
       pageInfo.data = data;
     }
 
-    return pageInfo;
+    let pi = Object.assign({}, pageInfo);
+    delete pi.contents;
+
+    return pi;
   }
   catch(err) {
     console.error("%o", err);

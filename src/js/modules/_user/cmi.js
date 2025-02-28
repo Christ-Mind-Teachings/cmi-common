@@ -9,7 +9,9 @@ const jsbKey = require("jsb/modules/_config/key");
 const womKey = require("wom/modules/_config/key");
 const pwomKey = require("pwom/modules/_config/key");
 const colKey = require("col/modules/_config/key");
-const ftcmKey = require("ftcm/modules/_config/key");
+
+const commonKey = require("common/modules/_config/key");
+const ftcmSi = require("ftcm/modules/_config/si");
 
 const WOMSOURCEID  = "10";
 const JSBSOURCEID  = "11";
@@ -57,6 +59,7 @@ export function getUrlByPageKey(key) {
     return colKey.getUrl(key, true);
   }
   if (key.startsWith(FTCMSOURCEID)) {
+    commonKey.initializeKey(ftcmSi);
     return ftcmKey.getUrl(key, true);
   }
 

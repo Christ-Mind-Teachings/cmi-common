@@ -13,8 +13,7 @@
 
 import {
   postAnnotation as putAnnotation,
-  deleteAnnotation as delAnnotation,
-  getAnnotations,
+  deleteAnnotation as delAnnotation
 } from "../_ajax/annotation";
 
 import {
