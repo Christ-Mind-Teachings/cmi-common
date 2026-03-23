@@ -13,7 +13,7 @@
  *
  * A bullseye is clicked when the audio is transitioning between paragrapsh - in the gap between
  * the previous paragraph and before the current. When all paragraphs have been clicked and the audio
- * ends, the timing submission form if displayed automatically. The user just submits the form and
+ * ends, the timing submission form is displayed automatically. The user just submits the form and
  * the timing data ends up being emailed to the recipient as configured with Netlify.
  *
  * If the submit fails, the timing data is stored in local storage and the form is automatically
@@ -91,7 +91,7 @@ function initializeEdit() {
           onApprove: function() {
             //check current timing has the correct number of data points
             let noOfParagraphs = $("p.cmiTranPara").length;
-            
+
             if (noOfParagraphs !== timingData.length) {
               notify.error("Unexpected number of data points in existing timing data, please inform Rick, Can't capture time until this is resolved.");
               resolve(false);
@@ -440,8 +440,12 @@ export default {
     //if we don't have timingData and user, who is a TIMER, did not 
     //capture time there will be one value in the timing array
     else if (!haveTimingData && captureData.length() === 1) {
-      captureProgress("REMOVE");
-      return;
+      let noOfParagraphs = $("p.cmiTranPara").length;
+      //don't ignore timing data when transcript has only one paragraph
+      if (noOfParagraphs > 1) {
+        captureProgress("REMOVE");
+        return;
+      }
     }
 
     let newData = captureData.getData();
