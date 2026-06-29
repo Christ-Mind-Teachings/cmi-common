@@ -8,5 +8,6 @@ export default {
   sources: "/public/config/sources.json",
   user: "https://kkdlxunoe7.execute-api.us-east-1.amazonaws.com/latest",
   acol: "https://kkdlxunoe7.execute-api.us-east-1.amazonaws.com/latest/acol/access",
-  search: "https://x5rigstpd2.execute-api.us-east-1.amazonaws.com/latest/search"
+  search:
+    "https://wu1ap3wh9d.execute-api.us-east-1.amazonaws.com/latest/search",
 };
